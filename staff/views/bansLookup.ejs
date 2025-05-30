@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lookup User Bans</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f6f8; color: #333; padding: 2rem; }
+    .container { max-width: 500px; margin: auto; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    input[type="text"] { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #4a90e2; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #4281c9; }
+    .error { color: #c0392b; margin-bottom: 1rem; }
+    .results { margin-top: 1.5rem; }
+    .ban-item { background: #fafafa; padding: 0.75rem; border-left: 4px solid #ff4d4f; margin-bottom: 0.5rem; border-radius: 4px; }
+    .ban-item strong { display: block; }
+  </style>
+</head>
+<body>
+    <a href="/members">← Back to Members</a>
+  <div class="container">
+    <h1>Lookup User Bans</h1>
+    <form method="POST">
+      <label for="userId">Discord User ID</label>
+      <input id="userId" name="userId" type="text" value="<%= queryId || '' %>" placeholder="123456789012345678">
+      <% if (error) { %><div class="error"><%= error %></div><% } %>
+      <button type="submit">Search Bans</button>
+    </form>
+
+    <% if (results) { %>
+      <div class="results">
+        <% if (results.length) { %>
+          <h2>Bans for <%= queryId %>:</h2>
+          <% results.forEach(b => { %>
+            <div class="ban-item">
+              <strong><%= b.guild %></strong>
+              <span><em><%= b.reason %></em></span>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>No bans found for <strong><%= queryId %></strong>.</p>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

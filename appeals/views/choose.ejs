@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome, <%= user.username %></title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .choice-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-content: center;
+  }
+  
+  .choice-card {
+    background: var(--bg-alt);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    width: 40%;
+    text-align: center;
+    transition: transform var(--transition);
+  }
+  
+  .choice-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .choice-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  
+  .choice-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Atlas Networks Appeal System</h1>
+    <p class="subtitle">Administration Selection</p>
+  </header>
+
+  <main class="content">
+    <h2>Hello, <%= user.username %>! Choose your path:</h2>
+    <div class="choice-container">
+      <div class="choice-card">
+        <h3>Admin Panel</h3>
+        <p>View and manage all appeals</p>
+        <a href="/staff" class="btn btn-link ">Go to Admin</a>
+      </div>
+      <div class="choice-card">
+        <h3>User Dashboard</h3>
+        <p>File and view your appeals</p>
+        <a href="/profile/<%= user.id %>" class="btn btn-link ">Go to Dashboard</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

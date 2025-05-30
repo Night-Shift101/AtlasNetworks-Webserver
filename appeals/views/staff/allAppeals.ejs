@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Appeals</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Appeals Admin</h1>
+    <p class="subtitle">All Appeals</p>
+  </header>
+
+  <main class="content">
+    <a href="/staff" class="btn btn-link">← Admin Home</a>
+    <h2>All Appeals</h2>
+
+    <% if (appeals.length === 0) { %>
+      <p class="text-muted">No appeals found.</p>
+    <% } else { %>
+      <table class="appeals-table">
+        <thead>
+          <tr>
+            <th>Appeal ID</th>
+            <th>Ban ID</th>
+            <th>User ID</th>
+            <th>Status</th>
+            <th>Filed At</th>
+            <th>Decided At</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% appeals.forEach(a => { %>
+            <tr>
+              <td><%= a.appeal_id %></td>
+              <td><%= a.ban_id %></td>
+              <td><a href="/staff/profile/<%= a.user_id %>"><%= a.user_id %></a></td>
+              <td class="status-<%= a.status %>">
+                <%= a.status.charAt(0).toUpperCase() + a.status.slice(1) %>
+              </td>
+              <td><%= new Date(a.filed_at).toLocaleString() %></td>
+              <td>
+                <% if (a.decided_at) { %>
+                  <%= new Date(a.decided_at).toLocaleString() %>
+                <% } else { %>
+                  —
+                <% } %>
+              </td>
+              <td>
+                <a href="/staff/profile/<%= a.user_id %>/<%= a.appeal_id %>">View</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+</body>
+</html>

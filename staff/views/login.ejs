@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login with Discord</title>
+  <style>
+    :root {
+    --clr-bg:         #fafafa;
+    --clr-surface:    #ffffff;
+    --clr-primary:    #4a90e2;
+    --clr-primary-h:  #4281c9;
+    --clr-secondary:  #f5a623;
+    --clr-text:       #333333;
+    --clr-text-muted: #666666;
+    --clr-border:     #e0e0e0;
+    --radius:         0.5rem;
+    --transition:     0.3s ease;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+  
+  body {
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 1rem;              /* default padding */
+  }
+  
+  /* When root-admin is active, add extra top-padding */
+  body.root-active {
+    padding-top: 4rem;          /* 4rem total top padding */
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+  }
+  
+  /* ── CONTAINERS ──────────────────────────────────────────────────────────── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* ── HEADINGS & LINKS ────────────────────────────────────────────────────── */
+  h1, h2, h3 {
+    color: var(--clr-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  a {
+    color: var(--clr-primary);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+  a:hover {
+    color: var(--clr-primary-h);
+  }
+  
+  /* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+  button,
+  .btn {
+    background: var(--clr-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background var(--transition), transform var(--transition);
+  }
+  button:hover,
+  .btn:hover {
+    background: var(--clr-primary-h);
+    transform: translateY(-2px);
+  }
+  button:disabled,
+  .btn:disabled {
+    background: var(--clr-border);
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  /* ── ERROR BANNER ───────────────────────────────────────────────────────── */
+  #error-banner {
+    position: fixed;
+    top: 1rem; left: 50%;
+    transform: translateX(-50%);
+    background: #f8d7da;
+    color: #721c24;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    opacity: 0.95;
+    z-index: 1000;
+  }
+  
+  /* ── CHIPS / TAGS ────────────────────────────────────────────────────────── */
+  .chip {
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    margin: 0.2em;
+    background: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 999px;
+    font-size: 0.85em;
+    color: var(--clr-text);
+    transition: background var(--transition), transform var(--transition);
+  }
+  .chip:hover {
+    background: var(--clr-secondary);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+/* Replace your .subdept-row rules with: */
+.subdept-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+  .subdept-block {
+    flex: 1 1 200px;  /* grow, shrink, base width */
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: #fafafa;
+  }
+  
+  /* Optional: ensure selects fill block width */
+  .subdept-block select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* ── TABLES ──────────────────────────────────────────────────────────────── */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--clr-surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  th, td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--clr-border);
+  }
+  th {
+    background: var(--clr-bg);
+    text-align: left;
+    font-weight: 600;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Make each row clickable without ugly highlight */
+  tr.button-row {
+    cursor: pointer;
+    transition: background var(--transition);
+  }
+  tr.button-row:hover {
+    background: rgba(74, 144, 226, 0.1);
+  }
+  
+  /* ── FORMS ───────────────────────────────────────────────────────────────── */
+  form {
+    background: var(--clr-surface);
+    padding: 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: var(--clr-text);
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    transition: border-color var(--transition);
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--clr-primary);
+    outline: none;
+  }
+  
+  /* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    body { padding: 0.5rem; }
+    .chip { font-size: 0.8em; padding: 0.2em 0.5em; }
+    th, td { padding: 0.5rem; }
+    button, .btn { width: 100%; }
+  }
+  
+  /* ── LOGIN PAGE ─────────────────────────────────────────────────────────── */
+  .login-container {
+    max-width: 320px;
+    margin: 5rem auto;
+    text-align: center;
+  }
+  .login-container h1 {
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+  }
+  .login-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--clr-primary);
+    color: #fff;
+    border-radius: var(--radius);
+    font-size: 1rem;
+  }
+  
+  /* ── PROFILE & STRIKE HISTORY ───────────────────────────────────────────── */
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .profile-header h1 {
+    font-size: 1.5rem;
+  }
+  .profile-section {
+    margin-top: 1.5rem;
+  }
+  .profile-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+
+  /* === Force Grid Layout for Sub-Departments === */
+.subdept-row {
+  display: grid !important;
+  /* as many 200px columns as will fit, each min-200px, max-1fr */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+  gap: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.subdept-block {
+  /* cancel any flex-based sizing that might sneak in */
+  flex: none !important;
+  display: block !important;
+}
+
+/* ── Root Admin Toggle Button ───────────────────────────────────────────── */
+    body { font-family: sans-serif; text-align: center; margin-top: 5rem; }
+    a.button {
+      display: inline-block; padding: 0.75rem 1.5rem;
+      background: #5865F2; color: #fff; text-decoration: none;
+      border-radius: 4px; font-weight: bold;
+    }
+  </style>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <% if (!user) { %>
+    <h1>Login with Discord</h1>
+    <a class="button" href="/auth/discord">🔑 Authorize via Discord</a>
+  <% } else { %>
+    <h1>Already signed in as <%= user.username %>#<%= user.discriminator %></h1>
+    <p><a href="/members">Go to your profile →</a></p>
+    <p><a href="/logout">Log out</a></p>
+  <% } %>
+</body>
+</html>

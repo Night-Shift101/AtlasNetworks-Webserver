@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Appeal #<%= appeal.appeal_id %> Details</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Center the button container and set its width */
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Atlas Networks Appeal System</h1>
+    <p class="subtitle">Atlas Networks Administration Team</p>
+  </header>
+
+  <main class="content">
+    <div class="profile-header">
+      <h2><%= user.username %> | Appeal #<%= appeal.appeal_id %></h2>
+      <a href="<%= isadmin ? '/staff/profile/'+user.id : '/profile/'+user.id %>" class="btn btn-link">← Back to Appeals</a>
+    </div>
+
+    <div class="appeal-detail">
+      <dl>
+        <dt>Appeal ID</dt>
+        <dd><%= appeal.appeal_id || '—' %></dd>
+
+        <dt>Ban ID</dt>
+        <dd><%= appeal.ban_id || '—' %></dd>
+
+        <dt>Your Message</dt>
+        
+        <dd><%= appeal.appeal_message || '—' %></dd>
+
+        <dt>Status</dt>
+        <dd class="status-<%= appeal.status %>">
+          <%= appeal.status.charAt(0).toUpperCase() + appeal.status.slice(1) %>
+        </dd>
+
+        <dt>Filed At</dt>
+        <dd><%= new Date(appeal.filed_at).toLocaleString() %></dd>
+
+        <dt>Decided At</dt>
+        <dd>
+          <% if (appeal.decided_at) { %>
+            <%= new Date(appeal.decided_at).toLocaleString() %>
+          <% } else { %>
+            Pending
+          <% } %>
+        </dd>
+
+        <dt>Decided By</dt>
+        <dd><%= appeal.decided_by || '—' %></dd>
+
+        <dt>Decision Message</dt>
+        <dd><%= appeal.decision_message || '—' %></dd>
+      </dl>
+    </div>
+  </div><!-- /.appeal-detail -->
+
+  <% if (punishment) { %>
+    <section class="punishment-info">
+      <h3>Punishment Details</h3>
+      <dl>
+        <dt>Banned User ID</dt>
+        <dd><%= user.username %> (<%= punishment.userId %>)</dd>
+
+        <dt>Ban ID</dt>
+        <dd><%= punishment.id %></dd>
+
+        <dt>Banned At</dt>
+        <dd><%= new Date(punishment.timestamp).toLocaleString() %></dd>
+
+        <dt>Reason</dt>
+        <dd><%= punishment.reason %></dd>
+      </dl>
+    </section>
+  <% } else { %>
+    <p class="text-muted">No punishment record found for this ban.</p>
+  <% } %>
+
+  <% if (isadmin && appeal.status === 'pending') { %>
+    <div class="decision-buttons">
+      <button id="approveBtn" class="btn btn-success btn-block">Approve</button>
+      <button id="denyBtn"    class="btn btn-danger btn-block">Deny</button>
+    </div>
+  <% } %>
+</main>
+
+<script>
+  <% if (isadmin && appeal.status === 'pending') { %>
+  const appealId = '<%= appeal.appeal_id %>';
+  document.getElementById('approveBtn').addEventListener('click', async () => {
+    const reason = prompt('Enter approval message (optional):');
+    if (reason === null) return;
+    const res = await fetch(`/appeal/approve/${appealId}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message: reason })
+    });
+    if (res.ok) location.reload();
+    else alert('Error approving');
+  });
+
+  document.getElementById('denyBtn').addEventListener('click', async () => {
+    const reason = prompt('Enter denial reason:');
+    if (!reason) return;
+    const res = await fetch(`/appeal/deny/${appealId}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message: reason })
+    });
+    if (res.ok) location.reload();
+    else alert('Error denying');
+  });
+  <% } %>
+</script>
+</body>
+</html>

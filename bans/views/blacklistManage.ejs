@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Blacklist</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f8; color: #333; line-height: 1.6; }
+    .container { max-width: 800px; margin: 2rem auto; padding: 1rem; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 1.5rem; font-size: 1.75rem; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e1e1e1; }
+    th { background: #f0f2f5; }
+    .reason { color: #555; font-style: italic; }
+    .actions { text-align: center; }
+    .actions form { display: inline; }
+    .btn-remove {
+      background: #ff4d4f;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-remove:hover { background: #e04446; }
+    .footer { text-align: center; margin-top: 1rem; }
+    .footer a { color: #0066cc; text-decoration: none; margin: 0 0.5rem; }
+    .footer a:hover { color: #004a99; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Manage Blacklist</h1>
+    <% if (entries.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Reason</th>
+            <th class="actions">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% entries.forEach(entry => { %>
+            <tr>
+              <td><%= entry.userId %></td>
+              <td class="reason"><%= entry.reason %></td>
+              <td class="actions">
+                <form method="POST" action="/bans/blacklist/manage/remove/<%= entry.userId %>" onsubmit="return confirm('Remove <%= entry.userId %> from blacklist?');">
+                  <button type="submit" class="btn-remove">Remove</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No blacklist entries found.</p>
+    <% } %>
+    <div class="footer">
+      <a href="/bans">Back to Bans</a> |
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File a New Appeal</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Atlas Networks Appeal System</h1>
+    <p class="subtitle">Atlas Networks Administration Team</p>
+  </header>
+
+  <main class="content">
+    <div class="profile-header">
+      <h2>New Appeal</h2>
+      <a href="/profile/<%= user.id %>" class="btn btn-link">← Back to Appeals</a>
+    </div>
+
+    <% if (error) { %>
+      <p class="text-muted"><%= error %></p>
+    <% } else if (punishments.length === 0) { %>
+      <p class="text-muted">No punishments found to appeal.</p>
+    <% } else { %>
+      <form action="/appeal/new" method="post" class="appeal-form">
+        <label for="banId">Which punishment are you appealing?</label>
+        <div class="custom-select">
+        <select name="banId" id="banId" required>
+          <option value="" disabled selected>Select a ban</option>
+          <% punishments.forEach(p => { %>
+            <option value="<%= p.ban_id %>">
+              #<%= p.ban_id %> – <%= new Date(p.timestamp).toLocaleString() %> – <%= p.reason %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+        <label for="reason">Why should this appeal be granted?</label>
+        <textarea
+          id="reason"
+          name="reason"
+          rows="4"
+          placeholder="Your appeal explanation..."
+          required
+        ></textarea>
+
+        <button type="submit" class="btn btn-success">Submit Appeal</button>
+      </form>
+    <% } %>
+  </main>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Server Bans</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f8; color: #333; line-height: 1.6; }
+
+    /* Blacklist overlay */
+    #blacklist-overlay {
+      display: flex;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center; align-items: center;
+      z-index: 1000;
+    }
+    #blacklist-modal {
+      background: #ff4d4f;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 90%; width: 400px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease;
+    }
+    #blacklist-modal h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    #blacklist-modal p {
+      font-size: 1rem;
+    }
+    .actions { margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; }
+    .actions a { display: inline-block; padding: 0.5rem 1rem; background: #0066cc; color: #fff; border-radius: 4px; text-decoration: none; transition: background 0.2s ease; }
+    .actions a:hover { background: #005bb5; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Container */
+    .container { max-width: 600px; margin: 2rem auto; padding: 1rem; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%); padding: 1.5rem; text-align: center; color: #fff; border-radius: 10px 10px 0 0; }
+    .header h1 { font-size: 1.75rem; }
+    .content { padding: 1.5rem; }
+    .ban-list { list-style: none; display: grid; grid-gap: 1rem; }
+    .ban-item { background: #fafafa; border-left: 4px solid #ff4d4f; padding: 1rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s ease; }
+    .ban-item:hover { background: #f0f2f5; }
+    .ban-item .guild { font-weight: 600; }
+    .ban-item .reason { font-style: italic; color: #555; }
+    .footer { text-align: center; padding: 1rem; background: #f9fafb; border-top: 1px solid #e1e1e1; margin-top: 1rem; border-radius: 0 0 10px 10px; }
+    .footer a { color: #0066cc; text-decoration: none; margin: 0 0.5rem; transition: color 0.2s; }
+    .footer a:hover { color: #004a99; }
+  </style>
+</head>
+<body>
+  <% if (blacklistEntry) { %>
+    <!-- Blacklist Overlay -->
+    <div id="blacklist-overlay">
+      <div id="blacklist-modal">
+        <h2>BLACKLISTED</h2>
+        <p><%= blacklistEntry.reason %></p>
+        <br>
+        <a href="https://appeals.atlasnetworksroleplay.com" style="color: #fafafa;">Click to Appeal</a>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="container">
+    <div class="header">
+      <h1>Bans for <%= user.username %>#<%= user.discriminator %></h1>
+    </div>
+    <div class="content">
+      <% if (bannedIn.length > 0) { %>
+        <ul class="ban-list">
+          <% bannedIn.forEach(b => { %>
+            <li class="ban-item">
+              <span class="guild"><%= b.name %></span>
+              <span class="reason"><%= b.reason || 'No reason given' %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>You have no bans on any of our servers. 🎉</p>
+      <% } %>
+    </div>
+    <% if (isAdmin) { %>
+      <div class="actions">
+        <a href="/bans/blacklist/manage">Manage Blacklist</a>
+      </div>
+    <% } %>
+    <div class="footer">
+      <a href="/">Home</a> |
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

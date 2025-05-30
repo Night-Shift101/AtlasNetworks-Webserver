@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pending Appeals</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Appeals Admin</h1>
+    <p class="subtitle">Pending Appeals</p>
+  </header>
+
+  <main class="content">
+    <a href="/staff" class="btn btn-link">← Admin Home</a>
+    <h2>Pending Appeals</h2>
+
+    <% if (appeals.length === 0) { %>
+      <p class="text-muted">No pending appeals.</p>
+    <% } else { %>
+      <table class="appeals-table">
+        <thead>
+          <tr>
+            <th>Appeal ID</th>
+            <th>Ban ID</th>
+            <th>User ID</th>
+            <th>Filed At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% appeals.forEach(a => { %>
+            <tr>
+              <td><%= a.appeal_id %></td>
+              <td><%= a.ban_id %></td>
+              <td>
+                <a href="/staff/profile/<%= a.user_id %>">
+                  <%= a.user_id %>
+                </a>
+              </td>
+              
+              <td><%= new Date(a.filed_at).toLocaleString() %></td>
+              <td>
+                <a href="/staff/profile/<%= a.user_id %>/<%= a.appeal_id %>">Review</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+</body>
+</html>

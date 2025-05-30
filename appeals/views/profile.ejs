@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= user.username %>’s Appeals</title>
+  <!-- only reference your external, dark-mode CSS -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <% if (isadmin) { %>
+      <a href="/staff/appeals/pending" class="btn btn-link">← Back to pending appeals</a>
+        <% } %>
+    <h1>Atlas Networks Appeal System</h1>
+    <p class="subtitle">Atlas Networks Administration Team</p>
+  </header>
+
+  <main class="content">
+    <div class="profile-header">
+      <h2><%= user.username %>’s Appeals</h2>
+      <% if (req.user.id == user.id) { %>
+      <a href="/appeal/new" class="btn btn-success">File a New Appeal</a>
+      <% } %>
+    </div>
+
+    <% if (appeals.length === 0) { %>
+      <p class="text-muted">
+        No appeals yet. 
+        <% if (req.user.id == user.id) { %>
+        <br>
+        <a href="/logout" class="btn btn-primary btn-block">Logout</a>
+        <% } %>
+      </p>
+    <% } else { %>
+      <table class="appeals-table">
+        <thead>
+          <tr>
+            <th>Appeal ID</th>
+            <th>Status</th>
+            <th>Filed At</th>
+            <th>Decided At</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% appeals.forEach(appeal => { %>
+            <tr>
+              <td><%= appeal.appeal_id %></td>
+              <td class="status-<%= appeal.status %>">
+                <%= appeal.status.charAt(0).toUpperCase() + appeal.status.slice(1) %>
+              </td>
+              <td><%= new Date(appeal.filed_at).toLocaleString() %></td>
+              <td>
+                <% if (appeal.decided_at) { %>
+                  <%= new Date(appeal.decided_at).toLocaleString() %>
+                <% } else { %>
+                  —
+                <% } %>
+              </td>
+              <td>
+                 
+                  <a class="btn-link" href="<%= isadmin ? '/staff/profile/' + user.id +'/' + appeal.appeal_id : '/profile/' + user.id +'/' + appeal.appeal_id %>">View</a>
+               
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+</body>
+</html>

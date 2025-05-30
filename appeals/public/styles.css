@@ -1,0 +1,394 @@
+    /*--------------------------------------------------------------
+4. Base Styles
+--------------------------------------------------------------*/
+
+/* CSS Variables for easy theming */
+:root {
+    --bg: #121212;
+    --bg-alt: #1e1e1e;
+    --text: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --accent: #5865f2;
+    --success: #28a745;
+    --success-dark: #218838;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --border: #2a2a2a;
+    --radius: 0.5rem;
+    --transition: 0.2s ease;
+    --max-width: 900px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Center content and constrain width */
+  main,
+  .content {
+    flex: 1;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  /*--------------------------------------------------------------
+  8. Header
+  --------------------------------------------------------------*/
+  .site-header {
+    background: var(--bg-alt);
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  }
+  
+  .site-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+  }
+  
+  /*--------------------------------------------------------------
+  9. Buttons
+  --------------------------------------------------------------*/
+
+  
+  /*--------------------------------------------------------------
+  10. Profile Header
+  --------------------------------------------------------------*/
+  .profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .profile-header h2 {
+    font-size: 1.75rem;
+    color: var(--text);
+  }
+  
+  /*--------------------------------------------------------------
+  11. Tables
+  --------------------------------------------------------------*/
+  .appeals-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .appeals-table th,
+  .appeals-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .appeals-table th {
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 600;
+  }
+  
+  .appeals-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .appeals-table tbody tr:hover {
+    background: rgba(255,255,255,0.05);
+  }
+  
+  .status-pending  { color: var(--warning); }
+  .status-approved { color: var(--success); }
+  .status-denied   { color: var(--danger); }
+  
+  .appeals-table a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .appeals-table a:hover {
+    text-decoration: underline;
+  }
+  
+  /*--------------------------------------------------------------
+  12. Responsive tweaks
+  --------------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .profile-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  .appeal-detail dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    row-gap: 0.75rem;
+    column-gap: 1.5rem;
+    background: var(--bg-alt);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .appeal-detail dt {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  
+  .appeal-detail dd {
+    margin: 0;
+    color: var(--text);
+  }
+  
+  .appeal-detail dd.status-pending  { color: var(--warning); }
+  .appeal-detail dd.status-approved { color: var(--success); }
+  .appeal-detail dd.status-denied   { color: var(--danger); }
+
+  .punishment-info {
+    margin-top: 2rem;
+  }
+  
+  .punishment-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  
+  .punishment-info dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    row-gap: 0.75rem;
+    column-gap: 1.5rem;
+    background: var(--bg-alt);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .punishment-info dt {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  
+  .punishment-info dd {
+    margin: 0;
+    color: var(--text);
+  }
+  /*--------------------------------------------------------------
+13. New Appeal Form
+--------------------------------------------------------------*/
+.appeal-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.25rem;
+    background: var(--bg-alt);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .appeal-form label {
+    font-weight: 600;
+    color: var(--text);
+  }
+  
+  .appeal-form select,
+  .appeal-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition);
+  }
+  
+  .appeal-form select:focus,
+  .appeal-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  .appeal-form textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+  
+  .appeal-form .btn-new {
+    justify-self: start;
+  }
+  /*--------------------------------------------------------------
+14. Custom dropdown styling
+--------------------------------------------------------------*/
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .custom-select select {
+    /* remove native styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* base styles (you already had these) */
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition);
+    cursor: pointer;
+  }
+  
+  .custom-select select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  /* custom arrow */
+  .custom-select::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(45deg);
+    border-right: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+  }
+  
+  /* on hover/focus, darken arrow */
+  .custom-select:hover::after,
+  .custom-select select:focus + .custom-select::after {
+    border-color: var(--accent);
+  }
+
+  /* staff/home.ejs specific */
+
+  :link {
+    color: #e0e0e0;
+  }
+/*─────────────────────────────────────────────────────────────────────────────
+   Base Button
+─────────────────────────────────────────────────────────────────────────────*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+/* hover “lift” effect */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+}
+
+/* focus outline */
+.btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*─────────────────────────────────────────────────────────────────────────────
+   Color Variants
+─────────────────────────────────────────────────────────────────────────────*/
+.btn-primary {
+  background-color: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #4752c4;
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: #fff;
+}
+.btn-success:hover {
+  background-color: var(--success-dark);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-link {
+  background: transparent;
+  color: var(--accent);
+  box-shadow: none;
+  padding: 0;
+  font-weight: 500;
+}
+.btn-link:hover {
+  text-decoration: underline;
+  transform: none;
+}
+
+/*─────────────────────────────────────────────────────────────────────────────
+   Icon Buttons
+─────────────────────────────────────────────────────────────────────────────*/
+.btn .icon {
+  margin-right: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  filter: invert(1);
+}
+
+/*─────────────────────────────────────────────────────────────────────────────
+   Full Width & Responsive
+─────────────────────────────────────────────────────────────────────────────*/
+.btn-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* small screens: stack buttons */
+@media (max-width: 600px) {
+  .btn {
+    width: 100%;
+  }
+}

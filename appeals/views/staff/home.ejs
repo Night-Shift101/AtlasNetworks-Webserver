@@ -1,0 +1,70 @@
+<!-- views/staff/home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Home</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* staff/home.ejs specific */
+.choice-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.choice-card {
+  background: var(--bg-alt);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  width: 40%;
+  text-align: center;
+  transition: transform var(--transition);
+}
+
+.choice-card:hover {
+  transform: translateY(-5px);
+}
+
+.choice-card h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.choice-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Atlas Networks Appeal System</h1>
+    <p class="subtitle">Administration Dashboard</p>
+  </header>
+
+  <main class="content">
+    <h2>Welcome, <%= user.username %>!</h2>
+
+    <div class="choice-container">
+      <div class="choice-card">
+        <h3>Pending Appeals</h3>
+        <p>View and review all appeals awaiting decision.</p>
+        <a href="/staff/appeals/pending" class="btn btn-link btn-block">Go</a>
+      </div>
+
+      <div class="choice-card">
+        <h3>All Appeals</h3>
+        <p>See the full history of every appeal.</p>
+        <a href="/staff/appeals/all" class="btn btn-link btn-block">Go</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
