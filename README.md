@@ -1,4 +1,4 @@
-Shield: [![CC BY-NC-ND 4.0][cc-by-nc-nd-shield]][cc-by-nc-nd]
+[![CC BY-NC-ND 4.0][cc-by-nc-nd-shield]][cc-by-nc-nd]
 # Atlas Networks Roleplay Web Server
 
 A comprehensive multi-domain web application server for Atlas Networks Roleplay community management, featuring Discord OAuth integration and modular service architecture.
